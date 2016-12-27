@@ -1,0 +1,30 @@
+﻿@{
+    var Title = "Radio";
+    var result = "";
+    if(IsPost)
+    {  
+        result = "This page was posted using the submit button.";
+    }else
+    {
+        result = "This was the first request for this page.";    
+    }
+    
+
+          @*Comment in razor
+            Multiline comments
+          *@
+          
+    // one line comment
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Title</title>
+    </head>
+    <body>
+        <form method="post" action="">
+            <input type="submit"value="Submit" />
+            <p>@result</p>
+        </form>
+    </body>
+</html>

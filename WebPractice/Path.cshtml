@@ -1,0 +1,31 @@
+﻿@{
+    var Title = "Radio";
+    string greeting = "Welcome to the site";
+    DateTime todayDate = DateTime.Now;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Title</title>
+</head>
+<body>
+    <h2>Welcome</h2>
+    <p>@greeting</p>
+    <p>Today's date is: @todayDate</p>
+
+    <table>
+        <tr>
+            <td>Requested URL</td>
+            <td>Relative Path</td>
+            <td>Path</td>
+            <td>Request Type</td>
+        </tr>
+        <tr>
+            <td>@Request.Url</td>
+            <td>@Request.FilePath</td>
+            <td>@Request.MapPath(Request.FilePath)</td>
+            <td>@Request.RequestType</td>
+        </tr>
+    </table>
+</body>
+</html>

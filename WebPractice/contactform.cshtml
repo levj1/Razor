@@ -1,0 +1,136 @@
+﻿@{
+    Layout = "/Shared/_Layout.cshtml";
+    string firstname = "";
+    string lastname = "";
+    string email = "";
+    string phone = "";
+    string message = "";
+    Dictionary<string, string> errorMessage = new Dictionary<string, string>();
+    bool error = false;
+    if (IsPost)
+    {
+        firstname = Request["firstname"];
+        lastname = Request["lastname"];
+        email = Request["email"];
+        phone = Request["phone"];
+        message = Request["message"];
+
+        if (firstname.IsEmpty())
+        {
+            errorMessage.Add("First Name", "cannot be empty");
+        }
+        if (lastname.IsEmpty())
+        {
+            errorMessage.Add("Last Name", "cannot be empty");
+        }
+        if (email.IsEmpty())
+        {
+            errorMessage.Add("Email", "cannot be empty");
+        }
+        if (message.IsEmpty())
+        {
+            errorMessage.Add("Message", "cannot be empty");
+        }
+
+        if (errorMessage.Count == 0)
+        {
+            // Success send email
+            try
+            {
+                string myEmail = "jameslevj@gmail.com";
+                // Initialize webmail helper
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.UserName = "jameslevj@gmail.com";
+                WebMail.Password = "mamajames1226";
+                WebMail.From = myEmail;
+                WebMail.EnableSsl = true;
+                // Send email
+                WebMail.Send(to: myEmail,
+                    subject: string.Format("Email from: {0}", email),
+                    body: message
+                    );
+                
+            }
+            catch (Exception ex)
+            {
+
+                errorMessage.Add("Error", "while sending the email");
+            }
+        }
+    }
+    
+}
+
+<form name="contact-form" role="form" action="" method="post">
+    
+        @if (errorMessage.Count > 0)
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var item in errorMessage)
+                    {
+                        <li>@item.Key @item.Value</li>
+                    }
+                </ul>
+            </div>
+        }
+        else if (IsPost && errorMessage.Count == 0)
+        {
+            <div class="alert btn-success">
+                <p>You message submitted successfully.</p>
+            </div>
+        }            
+
+    <div class="controls">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="firstname">First Name*:</label>
+                    <input id="firstname" type="text" name="firstname" class="form-control" placeholder="Enter first name" value="@firstname" />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="lastname">Last Name*:</label>
+                    <input id="lastname" type="text" name="lastname" class="form-control" placeholder="Enter last name" value="@lastname" />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Email*:</label>
+                    <input id="email" type="email" name="email" class="form-control" placeholder="Enter email" value="@email"/>
+                    <div class="help-block with-errors">afsf</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input id="phone" type="tel" name="phone" class="form-control" placeholder="Enter phone" value="@phone" />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="email">Message*:</label>
+                    <textarea id="message" name="message" class="form-control"
+                              rows="4" required="required" data-error="Please,leave us a message.">@message</textarea>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-success btn-send" value="Send message" />
+            </div>
+        </div>
+    </div>  
+    
+</form>
