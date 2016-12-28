@@ -37,18 +37,20 @@
             // Success send email
             try
             {
-                string myEmail = "jameslevj@gmail.com";
+                string myEmail = System.Configuration.ConfigurationManager.AppSettings["emailAccount"];
+                string password = System.Configuration.ConfigurationManager.AppSettings["mailPassword"];
+                string messageBody = string.Format("Name: {0} {1} <br /> Email: {2} <br /> Phone: {3}<br /> Message<hr /> <br />{4}", firstname, lastname, email, phone, message);
                 // Initialize webmail helper
                 WebMail.SmtpServer = "smtp.gmail.com";
                 WebMail.SmtpPort = 587;
-                WebMail.UserName = "jameslevj@gmail.com";
-                WebMail.Password = "mamajames1226";
+                WebMail.UserName = myEmail;
+                WebMail.Password = password;
                 WebMail.From = myEmail;
                 WebMail.EnableSsl = true;
                 // Send email
-                WebMail.Send(to: myEmail,
-                    subject: string.Format("Email from: {0}", email),
-                    body: message
+                WebMail.Send(to: email,
+                    subject: string.Format("{0} {1} from promisedivine has emailed you.", firstname, lastname),
+                    body: messageBody
                     );
                 
             }

@@ -83,6 +83,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="openfile.cshtml" />
+    <Content Include="secretConfig.txt" />
     <Content Include="Shared\_Header.cshtml" />
     <Content Include="Shared\_Header - Copy.cshtml" />
     <Content Include="Shared\_Footer.cshtml" />
@@ -100,7 +101,7 @@
     <Content Include="decisions.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="TextFile1.txt" />
+    <None Include="secret.config" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
